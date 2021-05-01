@@ -2,13 +2,12 @@ version: "3"
 
 services:
   my-mining-stats:
+    image: node:14-alpine
     container_name: my-mining-stats
-    build:
-      context: .
+    working_dir: /app
     volumes:
       - "./:/app"
     environment:
-      TZ: "Europe/Bucharest"
-    working_dir: /app
+      DEBUG: "false"
     restart: always
-    command: "npm start"
+    command: sh -c "npm install && npm start"

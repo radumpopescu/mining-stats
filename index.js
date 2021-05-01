@@ -16,18 +16,18 @@ const { getFlexpoolBalance, getFlexpoolEstimate } = require("./flexpool");
 
 async function update() {
   const toLog = [];
-  try {
-    const rates = await getRates();
-    Object.keys(rates).forEach((key) => {
-      toLog.push({
-        measurement: "ezil",
-        key,
-        value: rates[key],
-      });
-    });
-  } catch (e) {
-    console.log(e.error);
-  }
+  // try {
+  //   const rates = await getRates();
+  //   Object.keys(rates).forEach((key) => {
+  //     toLog.push({
+  //       measurement: "ezil",
+  //       key,
+  //       value: rates[key],
+  //     });
+  //   });
+  // } catch (e) {
+  //   console.log(e.error);
+  // }
   try {
     const stats = await getStats(EZIL_ADDRESS);
     Object.keys(stats).forEach((key) => {
