@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  my-mining-stats:
+    container_name: my-mining-stats
+    build:
+      context: .
+    volumes:
+      - "./:/app"
+    environment:
+      TZ: "Europe/Bucharest"
+    working_dir: /app
+    restart: always
+    command: "npm start"
