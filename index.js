@@ -141,6 +141,6 @@ async function update() {
   if (DEBUG) {
     update();
   } else {
-    schedule.scheduleJob(`0 * * * * *`, update);
+    schedule.scheduleJob(`0 */2 * * * *`, update);
   }
 })();
