@@ -38,6 +38,15 @@ const influx = new Influx.InfluxDB({
       },
       tags: [],
     },
+    {
+      measurement: "ethermine",
+      fields: {
+        balance: Influx.FieldType.FLOAT,
+        ethPerMin: Influx.FieldType.FLOAT,
+        usdPerMin: Influx.FieldType.FLOAT,
+      },
+      tags: [],
+    },
   ],
 });
 influx
