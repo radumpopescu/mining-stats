@@ -5,10 +5,12 @@ const DEBUG = process.env.DEBUG == "true";
 const EZIL_ADDRESS = process.env.EZIL_ADDRESS;
 const FLEXPOOL_ADDRESS = process.env.FLEXPOOL_ADDRESS;
 const ETHERMINE_ADDRESS = process.env.ETHERMINE_ADDRESS;
+const F2POOL_ADDRESS = process.env.F2POOL_ADDRESS;
 
 const EZIL_ENABLED = process.env.EZIL_ENABLED == "true";
 const FLEXPOOL_ENABLED = process.env.FLEXPOOL_ENABLED == "true";
 const ETHERMINE_ENABLED = process.env.ETHERMINE_ENABLED == "true";
+const F2POOL_ENABLED = process.env.F2POOL_ENABLED == "true";
 
 const {
   getRates,
@@ -19,6 +21,7 @@ const {
 } = require("./ezil");
 const { getFlexpoolBalance, getFlexpoolEstimate } = require("./flexpool");
 const { getEthermineBalance, getEthermineEstimate } = require("./ethermine");
+const { getF2poolBalance } = require("./f2pool");
 
 async function update() {
   const toLog = [];
@@ -123,6 +126,21 @@ async function update() {
           measurement: "ethermine",
           key,
           value: ethermineEstimate[key],
+        });
+      });
+    } catch (e) {
+      console.log(e.error);
+    }
+  }
+
+  if (F2POOL_ENABLED) {
+    try {
+      const stats = await getF2poolBalance(F2POOL_ADDRESS);
+      Object.keys(stats).forEach((key) => {
+        toLog.push({
+          measurement: "f2pool",
+          key,
+          value: stats[key],
         });
       });
     } catch (e) {

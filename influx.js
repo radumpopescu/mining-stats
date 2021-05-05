@@ -47,6 +47,13 @@ const influx = new Influx.InfluxDB({
       },
       tags: [],
     },
+    {
+      measurement: "f2pool",
+      fields: {
+        balance: Influx.FieldType.FLOAT,
+      },
+      tags: [],
+    },
   ],
 });
 influx
