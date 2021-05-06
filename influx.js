@@ -54,6 +54,14 @@ const influx = new Influx.InfluxDB({
       },
       tags: [],
     },
+    {
+      measurement: "hiveon",
+      fields: {
+        estDaily: Influx.FieldType.FLOAT,
+        balance: Influx.FieldType.FLOAT,
+      },
+      tags: [],
+    },
   ],
 });
 influx
