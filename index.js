@@ -7,12 +7,14 @@ const FLEXPOOL_ADDRESS = process.env.FLEXPOOL_ADDRESS;
 const ETHERMINE_ADDRESS = process.env.ETHERMINE_ADDRESS;
 const F2POOL_ADDRESS = process.env.F2POOL_ADDRESS;
 const HIVEON_ADDRESS = process.env.HIVEON_ADDRESS;
+const BINANCE_TOKEN = process.env.BINANCE_TOKEN;
 
 const EZIL_ENABLED = process.env.EZIL_ENABLED == "true";
 const FLEXPOOL_ENABLED = process.env.FLEXPOOL_ENABLED == "true";
 const ETHERMINE_ENABLED = process.env.ETHERMINE_ENABLED == "true";
 const F2POOL_ENABLED = process.env.F2POOL_ENABLED == "true";
 const HIVEON_ENABLED = process.env.HIVEON_ENABLED == "true";
+const BINANCE_ENABLED = process.env.BINANCE_ENABLED == "true";
 
 const {
   getRates,
@@ -25,6 +27,7 @@ const { getFlexpoolBalance, getFlexpoolEstimate } = require("./flexpool");
 const { getEthermineBalance, getEthermineEstimate } = require("./ethermine");
 const { getF2poolBalance } = require("./f2pool");
 const { getHiveonData } = require("./hiveon");
+const { getBinanceBalance } = require("./binance");
 
 async function update() {
   const toLog = [];
@@ -160,6 +163,19 @@ async function update() {
           key,
           value: stats[key],
         });
+      });
+    } catch (e) {
+      console.log(e.error);
+    }
+  }
+
+  if (BINANCE_ENABLED) {
+    try {
+      const binanceBalance = await getBinanceBalance(BINANCE_TOKEN);
+      toLog.push({
+        measurement: "binance",
+        key: "balance",
+        value: binanceBalance,
       });
     } catch (e) {
       console.log(e.error);
