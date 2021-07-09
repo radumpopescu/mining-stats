@@ -62,6 +62,13 @@ const influx = new Influx.InfluxDB({
       },
       tags: [],
     },
+    {
+      measurement: "binance",
+      fields: {
+        balance: Influx.FieldType.FLOAT,
+      },
+      tags: [],
+    },
   ],
 });
 influx
@@ -75,9 +82,26 @@ influx
     console.error(`Error creating Influx database!`);
   });
 
+let lastLogs = {} 
+
+function shouldLog(log) {
+  const { measurement, key, value } = log;
+  const logKey = `${measurement}${key}`
+  if (logKey in lastLogs && lastLogs[logKey] == value) {
+    return false
+  } 
+  lastLogs[logKey] = value
+
+  return true
+}
+
 function influxLog(logs) {
   console.log("toInflux", logs);
   logs.forEach((log) => {
+    if (!shouldLog(log)) {
+      console.log("Same Log")
+      return
+    }
     const { measurement, key, value } = log;
     influx
       .writePoints([
